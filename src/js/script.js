@@ -3,7 +3,6 @@ window.onload = function () {
     canvas = document.getElementById("gameCanvas");
     ctx = canvas.getContext("2d");
 
-    // Postavljanje dimenzija canvasa na veličinu prozora
     canvas.width = window.innerWidth * 0.999;
     canvas.height = window.innerHeight * 0.999;
 
@@ -28,17 +27,17 @@ window.onload = function () {
     startTime = new Date().getTime();
     lastTime = startTime;
 
-    window.addEventListener("resize", handleResize); // Dodano praćenje promjena veličine prozora
+    window.addEventListener("resize", handleResize); 
 
     setInterval(updateGame, 16.67); // 60 fps
 };
 
 function handleResize() {
-    // Prilagodi dimenzije canvasa prilikom promjene veličine prozora
+    
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Ponovno postavi igrača i asteroide kako bi se prilagodili novim dimenzijama
+
     player.x = canvas.width / 2;
     player.y = canvas.height / 2;
 
@@ -135,7 +134,6 @@ function movePlayer(deltaTime) {
     player.x += player.direction.x * player.speed * deltaTime;
     player.y += player.direction.y * player.speed * deltaTime;
 
-    // Pomicanje igrača na suprotnu stranu ako izađe izvan rubova
     if (player.x < 0) player.x = canvas.width - player.width;
     if (player.x + player.width > canvas.width) player.x = 0;
     if (player.y < 0) player.y = canvas.height - player.height;
@@ -178,10 +176,7 @@ function moveAsteroids() {
             }
 
             
-            // Generate random speed between 4 and 8, then randomly make it negative
             asteroid.speedX = (Math.random() * 3 + 3) * (Math.random() < 0.5 ? -1 : 1);
-
-            // Generate random speed between 4 and 8, then randomly make it negative
             asteroid.speedY = (Math.random() * 3 + 3) * (Math.random() < 0.5 ? -1 : 1);
 
             
@@ -224,26 +219,26 @@ function drawGame() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = player.color;
-    ctx.shadowColor = "rgba(255, 0, 0, 0.8)"; // Shadow color for player (red)
-    ctx.shadowBlur = 10; // Shadow blur radius
+    ctx.shadowColor = "rgba(255, 0, 0, 0.8)"; 
+    ctx.shadowBlur = 10;
     ctx.fillRect(player.x, player.y, player.width, player.height);
-    ctx.shadowColor = "rgba(0, 0, 0, 0)"; // Reset shadow
+    ctx.shadowColor = "rgba(0, 0, 0, 0)"; 
 
     for (let asteroid of asteroids) {
         ctx.fillStyle = asteroid.color;
-        ctx.strokeStyle = "black"; // Stroke color
-        ctx.lineWidth = 2; // Stroke width
+        ctx.strokeStyle = "black"; 
+        ctx.lineWidth = 2; 
 
-        // Add shadow to asteroid
-        ctx.shadowColor = "rgba(0, 0, 0, 0.8)"; // Shadow color for asteroids
-        ctx.shadowBlur = 10; // Shadow blur radius
+
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+        ctx.shadowBlur = 10; 
 
         ctx.beginPath();
         ctx.rect(asteroid.x, asteroid.y, asteroid.width, asteroid.height);
         ctx.fill();
         ctx.stroke();
 
-        // Reset shadow
+
         ctx.shadowColor = "rgba(0, 0, 0, 0)";
     }
 
@@ -285,7 +280,6 @@ function handleKeyUp(event) {
 function updatePlayerDirection() {
     let newDirection = { x: 0, y: 0 };
 
-    // Ako su pritisnute tipke za gore i dolje istovremeno, zaustavi kretanje po Y osi
     if (keysPressed.ArrowUp && keysPressed.ArrowDown) {
         newDirection.y = 0;
     } else if (keysPressed.ArrowUp) {
@@ -294,7 +288,6 @@ function updatePlayerDirection() {
         newDirection.y = player.speed;
     }
 
-    // Ako su pritisnute tipke za lijevo i desno istovremeno, zaustavi kretanje po X osi
     if (keysPressed.ArrowLeft && keysPressed.ArrowRight) {
         newDirection.x = 0;
     } else if (keysPressed.ArrowLeft) {
@@ -303,6 +296,5 @@ function updatePlayerDirection() {
         newDirection.x = player.speed;
     }
 
-    // Postavi smjer igrača
     player.direction = newDirection;
 }

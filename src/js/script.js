@@ -224,16 +224,27 @@ function drawGame() {
     ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
     ctx.fillStyle = player.color;
+    ctx.shadowColor = "rgba(255, 0, 0, 0.8)"; // Shadow color for player (red)
+    ctx.shadowBlur = 10; // Shadow blur radius
     ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.shadowColor = "rgba(0, 0, 0, 0)"; // Reset shadow
 
     for (let asteroid of asteroids) {
         ctx.fillStyle = asteroid.color;
         ctx.strokeStyle = "black"; // Stroke color
         ctx.lineWidth = 2; // Stroke width
+
+        // Add shadow to asteroid
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)"; // Shadow color for asteroids
+        ctx.shadowBlur = 10; // Shadow blur radius
+
         ctx.beginPath();
         ctx.rect(asteroid.x, asteroid.y, asteroid.width, asteroid.height);
         ctx.fill();
         ctx.stroke();
+
+        // Reset shadow
+        ctx.shadowColor = "rgba(0, 0, 0, 0)";
     }
 
     ctx.fillStyle = "white";
@@ -244,6 +255,7 @@ function drawGame() {
     elapsedTime = ((currentTime - startTime) / 1000).toFixed(3);
     ctx.fillText("Vrijeme: " + secondsToMMSSSSS(elapsedTime), canvas.width - 10, 60);
 }
+
 
 function secondsToMMSSSSS(seconds) {
     if (seconds === "N/A") return seconds;
